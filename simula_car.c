@@ -56,7 +56,7 @@ int main(void) {
     // Mostrar el carrito con tu nombre
     printf("======================================\n");
     printf("🚗🚗🚗 Simulación de Carrera de Coches 🚗🚗🚗\n");
-    printf("       Creado por: Matias Vásquez\n");
+    printf("       Alumno: Matias Vásquez\n");
     printf("======================================\n");
 
     printf("\nSALIDA DE COCHES\n\n");

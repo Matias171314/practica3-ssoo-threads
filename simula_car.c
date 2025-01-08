@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 
 #define NUM_COCHES 8
 
@@ -22,11 +23,13 @@ coche_t Coches[NUM_COCHES];
 
 // Función ejecutada por los hilos
 void *funcion_coche(void *arg) {
-    coche_t *pcoche = (coche_t *)arg; // Convertimos el argumento al tipo coche_t
+    coche_t *pcoche = (coche_t *)arg;
     int aleatorio;
-    unsigned int semilla = pcoche->id + pthread_self(); // Semilla para generación aleatoria
+    unsigned int semilla = (unsigned int)(pcoche->id + time(NULL)); // Mejor semilla
 
-    printf("Salida de %s %d\n", pcoche->cadena, pcoche->id);
+    printf("======================================\n");
+    printf("🚗 Salida de %s (ID: %d)\n", pcoche->cadena, pcoche->id);
+    printf("======================================\n");
     fflush(stdout);
 
     // Generar número aleatorio con función reentrante rand_r()
@@ -34,7 +37,9 @@ void *funcion_coche(void *arg) {
 
     sleep(aleatorio); // Simula el tiempo que tarda el coche en completar la carrera
 
-    printf("Llegada de %s %d\n", pcoche->cadena, pcoche->id);
+    printf("--------------------------------------\n");
+    printf("🏁 Llegada de %s (ID: %d)\n", pcoche->cadena, pcoche->id);
+    printf("--------------------------------------\n");
 
     // Acceder a la sección crítica para almacenar la clasificación final
     pthread_mutex_lock(&mutex);
@@ -45,17 +50,22 @@ void *funcion_coche(void *arg) {
 }
 
 int main(void) {
-    pthread_t hilosCoches[NUM_COCHES]; // Identificadores de los hilos
+    pthread_t hilosCoches[NUM_COCHES];
     int i;
 
-    printf("Se inicia proceso de creación de hilos...\n\n");
-    printf("SALIDA DE COCHES\n");
+    // Mostrar el carrito con tu nombre
+    printf("======================================\n");
+    printf("🚗🚗🚗 Simulación de Carrera de Coches 🚗🚗🚗\n");
+    printf("       Creado por: Matias Vásquez\n");
+    printf("======================================\n");
+
+    printf("\nSALIDA DE COCHES\n\n");
 
     // Crear hilos para cada coche
     for (i = 0; i < NUM_COCHES; i++) {
         Coches[i].id = i;
-        Coches[i].cadena = malloc(20 * sizeof(char)); // Asignar memoria para el nombre
-        sprintf(Coches[i].cadena, "Coche_%d", i); // Asignar nombre al coche
+        Coches[i].cadena = malloc(20 * sizeof(char));
+        sprintf(Coches[i].cadena, "Coche_%d", i);
 
         if (pthread_create(&hilosCoches[i], NULL, funcion_coche, &Coches[i]) != 0) {
             fprintf(stderr, "Error al crear el hilo %d\n", i);
@@ -63,7 +73,7 @@ int main(void) {
         }
     }
 
-    printf("Proceso de creación de hilos terminado\n\n");
+    printf("\nProceso de creación de hilos terminado\n\n");
 
     // Esperar a que todos los hilos terminen
     for (i = 0; i < NUM_COCHES; i++) {
@@ -73,18 +83,23 @@ int main(void) {
         }
     }
 
-    printf("Todos los coches han LLEGADO A LA META\n");
+    printf("\nTodos los coches han LLEGADO A LA META\n");
 
     // Mostrar la clasificación final
-    printf("CLASIFICACIÓN FINAL:\n");
+    printf("\nCLASIFICACIÓN FINAL:\n");
+    printf("======================================\n");
     for (i = 0; i < NUM_COCHES; i++) {
-        printf("Posición %d: Coche %d\n", i + 1, clasificacionFinal[i]);
+        printf("Posición %d: %s (ID: %d)\n", i + 1, Coches[clasificacionFinal[i]].cadena, clasificacionFinal[i]);
     }
+    printf("======================================\n");
 
     // Liberar la memoria asignada a los nombres de los coches
     for (i = 0; i < NUM_COCHES; i++) {
         free(Coches[i].cadena);
     }
+
+    // Destruir el mutex
+    pthread_mutex_destroy(&mutex);
 
     return 0;
 }

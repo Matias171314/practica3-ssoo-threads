@@ -50,3 +50,6 @@ El hilo principal espera a que todos los coches terminen y muestra la clasificac
 
 Matias Nicolas Vásquez Herbozo - Y4507803R
 Desarrollado para la Práctica 3 de la asignatura Sistemas Operativos de la Universidad de Alcalá.
+
+# Invitación:
+https://github.com/Matias171314/practica3-ssoo-threads/invitations

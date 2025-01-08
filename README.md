@@ -46,28 +46,7 @@ Cada hilo simula la salida y llegada de un coche.
 Los tiempos de llegada son aleatorios.
 El hilo principal espera a que todos los coches terminen y muestra la clasificación final.
 
-## Ejemplo de Salida
-
-Se inicia proceso de creación de hilos...
-SALIDA DE COCHES
-Salida de Coche_0 0
-Salida de Coche_1 1
-...
-Llegada de Coche_2 2
-Llegada de Coche_0 0
-...
-Todos los coches han LLEGADO A LA META
-CLASIFICACIÓN FINAL:
-Posición 1: Coche 2
-Posición 2: Coche 0
-...
-
-# Notas
-
-Asegúrate de tener permisos para ejecutar el programa en tu sistema.
-La práctica debe subirse a un repositorio GitHub privado.
-
 # Autores
 
-Matias Nicolas Vásquez Herbozo
-Este proyecto ha sido desarrollado como parte de la asignatura Sistemas Operativos en la Universidad de Alcalá.
+Matias Nicolas Vásquez Herbozo - Y4507803R
+Desarrollado para la Práctica 3 de la asignatura Sistemas Operativos de la Universidad de Alcalá.
